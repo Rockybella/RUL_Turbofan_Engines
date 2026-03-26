@@ -1,4 +1,4 @@
-###AeroNet RUL
+### AeroNet RUL
 
 https://aeronetrul-raquel.streamlit.app/
 
