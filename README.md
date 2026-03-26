@@ -1,4 +1,4 @@
-# AeroNet RUL: Hybrid CAE-BiLSTM for Turbofan Prognostics
+# AeroNet RUL
 
 🚀 **Live Deployment:** [aeronetrul-raquel.streamlit.app](https://aeronetrul-raquel.streamlit.app)
 
