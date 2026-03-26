@@ -59,7 +59,8 @@ st.markdown("""
         <div style='background:rgba(255,255,255,0.1); padding:15px; border-radius:12px; font-size:40px;'>🛡️</div>
         <div>
             <h1 style='margin:0; font-size:2.2rem; letter-spacing:-1px;'>AeroNet RUL</h1>
-            <p style='opacity:0.8; margin:0; font-weight:300;'>PHM Deep Learning Ensemble • NASA C-MAPSS FD001</p>
+            <p style='opacity:0.8; margin:0; font-weight:300;'>PHM Deep Learning Ensemble • NASA C-MAPSS turbofan engines</p>
+            <p style='opacity:0.8; margin:0; font-weight:300;'>"This framework utilizes a multi-stage deep learning pipeline to extract spatial features and model long-term temporal dependencies, delivering reliable RUL predictions for proactive maintenance scheduling."</p>
         </div>
     </div>
 </div>
