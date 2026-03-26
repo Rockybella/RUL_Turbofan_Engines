@@ -1,19 +1,39 @@
-# Python virtual environment
+# --- 1. System & Environments ---
 turbo_venv/
 venv/
-.venv/
+.env
 __pycache__/
-
-# Large Model Files
-*.pkl
-*.h5
-
-# Data files (optional, if they are huge)
-CMAPSSData/
-
-
-turbo_venv/
-__pycache__/
-*.pkl
 *.dll
 *.exe
+.DS_Store
+
+# --- 2. Development & Notebooks ---
+train_model.py
+notebooks/
+*.ipynb
+Untitled-*.py
+api.py
+
+# --- 3. Data & Heavy Documentation ---
+# Prevents massive NASA files or PDFs from cluttering Git
+CMAPSSData/
+*.txt
+*.csv
+*.zip
+*.pdf
+*.png
+training_log.csv
+
+# --- 4. Models & Binaries ---
+# Ignore all model formats by default
+*.pkl
+*.h5
+*.keras
+*.bin
+
+# --- 5. EXCEPTIONS (KEEP THESE) ---
+# These files are REQUIRED for the Streamlit app to function
+!app.py
+!requirements.txt
+!turbofan_model.pkl
+!std_scaler.bin
