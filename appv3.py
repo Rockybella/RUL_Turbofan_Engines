@@ -5,14 +5,14 @@ import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime
 
-# 1. Page Configuration
+#Page Configuration
 st.set_page_config(
     page_title="AeroNet RUL | Turbofan Analytics",
     page_icon="🚀",
     layout="wide"
 )
 
-# 2. Advanced Professional UI (No Margins, Glassmorphism elements)
+# No Margins, Glassmorphism elements
 st.markdown("""
 <style>
     .block-container { padding: 0rem 2rem !important; }
@@ -68,7 +68,7 @@ st.markdown("""
 
 # 3. Sidebar
 with st.sidebar:
-    st.image("https://img.icons8.com", width=60)
+    # st.image("https://img.icons8.com", width=60)
     st.title("System Control")
     engine_id = st.selectbox("Select Engine Unit", ["Unit #1001", "Unit #1002", "Unit #1003"])
     st.divider()
@@ -100,7 +100,9 @@ tab1, tab2, tab3, tab4 = st.tabs(["📊 LIVE TELEMETRY", "📉 MODEL ANALYTICS",
 
 def update_plot(fig):
     fig.update_layout(template="plotly_white", margin=dict(l=10, r=10, t=40, b=10), hovermode="x unified",
-                      paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(family="Inter, sans-serif"))
+                      paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(family="Inter, sans-serif"),
+                      legend=dict(orientation="h",yanchor="bottom",y=1.02, xanchor="right",x=1, title_text='')
+                      )
     return fig
 
 with tab1:
