@@ -1,6 +1,6 @@
 # AeroNet RUL
 
-🚀 **Live Deployment:** [aeronetrul-raquel.streamlit.app](https://aeronetrul-raquel.streamlit.app)
+🚀 **Live Deployment:** [aeronetrul-raquel.streamlit.app](https://aeronet-rul-raquel.streamlit.app/)
 
 ---
 
