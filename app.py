@@ -10,12 +10,33 @@ import joblib
 #  SETTINGS & SENSOR MAPPING
 # ==========================================
 SENSOR_MAP = {
-    's2': 'T24 (LPC Temp)', 's3': 'T30 (HPC Temp)', 's4': 'T50 (LPT Temp)',
-    's7': 'P30 (HPC Press)', 's11': 'Ps30 (HPC Static Press)', 's12': 'phi (Fuel/Ps30)',
-    's15': 'BPR (Bypass Ratio)', 's20': 'HPT Coolant Bleed', 's21': 'LPT Coolant Bleed'
-}
+        'op1': 'Altitude (ft)',
+        'op2': 'Mach Number',
+        'op3': 'Sea Level Pressure',
+        's1': 'Fan Inlet Temp',
+        's2': 'LPC Outlet Temp',
+        's3': 'HPC Outlet Temp',
+        's4': 'LPT Outlet Temp',
+        's5': 'Fan Inlet Press',
+        's6': 'Bypass Duct Press',
+        's7': 'Total HPC Outlet Press',
+        's8': 'Physical Fan Speed',
+        's9': 'Physical Core Speed',
+        's10': 'Engine Pressure Ratio',
+        's11': 'HPC Static Press',
+        's12': 'Fuel Flow Ratio',
+        's13': 'Corrected Fan Speed',
+        's14': 'Corrected Core Speed',
+        's15': 'Bypass Ratio',
+        's16': 'Burner Fuel-Air Ratio',
+        's17': 'Bleed Enthalpy (Core Speed)', # This is your s17
+        's18': 'Demanded Fan Speed',
+        's19': 'Demanded Corrected Fan Speed',
+        's20': 'HPT Coolant Bleed',
+        's21': 'LPT Coolant Bleed'
+    }
 
-st.set_page_config(page_title="AeroNet RUL", layout="wide")
+st.set_page_config(page_title="AeroNet RUL", page_icon="✈️", layout="wide")
 
 # CSS for the "Glassmorphism" look in your image
 st.markdown("""
@@ -56,7 +77,7 @@ WINDOW_SIZE = 30
 # ==========================================
 with st.sidebar:
     st.title("System Control")
-    # Formats Unit 1 as "Unit #1001" to match your image
+    # Formats Unit 1 as "Unit #1001" 
     unit_options = {f"Unit #100{u}": u for u in df_test['unit'].unique()}
     selected_label = st.selectbox("Select Engine Unit", list(unit_options.keys()))
     unit_id = unit_options[selected_label]
@@ -183,16 +204,21 @@ with tab1:
 # ==========================================
 # MODEL ANALYTICS TAB
 # ==========================================
+import pickle
 with tab2:
+    with open('train_history.pkl', 'rb') as f:
+        history = pickle.load(f)
     st.subheader("Model Training & Convergence")
+    # Measure the length of the 'loss' list, not the dictionary itself
+    num_epochs = len(history['loss']) 
+    epochs = np.arange(1, num_epochs + 1)
     
-    # Simulating training history (since .h5 doesn't store 'history' object)
-    epochs = np.arange(1, 26)
-    # Typical convergence curves for CAE-BiLSTM on FD001
-    train_loss = 400 * np.exp(-epochs/5) + 150 + np.random.normal(0, 5, 25)
-    val_loss = 420 * np.exp(-epochs/6) + 165 + np.random.normal(0, 5, 25)
-    train_rmse = np.sqrt(train_loss)
-    val_rmse = np.sqrt(val_loss)
+
+    # Map the CSV columns to variables
+    train_loss = history['loss']
+    val_loss = history['val_loss']
+    train_rmse = history['root_mean_squared_error'] # Or whatever the metric name was
+    val_rmse = history['val_root_mean_squared_error']
 
     col_loss, col_rmse = st.columns(2)
     
@@ -237,7 +263,7 @@ RUL_LIMIT = 125
 with tab3:
     st.subheader("Error Characterization")
     
-    # We pass RUL_LIMIT as an argument to the cached function to avoid NameErrors
+    # Pass RUL_LIMIT as an argument to the cached function to avoid NameErrors
     @st.cache_data
     def get_all_preds(_model, _scaler, _df_test, _y_true_all, _limit):
         all_units = _df_test['unit'].unique()[:50] 
@@ -264,7 +290,7 @@ with tab3:
     # Call the function passing the necessary objects
     err_df = get_all_preds(model, scaler, df_test, y_true_all, RUL_LIMIT)
 
-    # 1. Scatter Plot with OLS Trendline
+    # Scatter Plot with OLS Trendline
     import statsmodels.api as sm # Ensure statsmodels is installed for 'ols' trendline
     fig_res = px.scatter(
         err_df, x="Actual", y="Predicted", 
@@ -273,13 +299,13 @@ with tab3:
         color_discrete_sequence=['#2563EB']
     )
 
-    # 2. Perfect Prediction Line
+    # Perfect Prediction Line
     fig_res.add_shape(
         type="line", x0=0, y0=0, x1=RUL_LIMIT, y1=RUL_LIMIT,
         line=dict(color="#94A3B8", dash="dot")
     )
 
-    # 3. Spikeline Styling (Crosshair effect)
+    # Spikeline Styling (Crosshair effect)
     fig_res.update_traces(marker=dict(size=10, opacity=0.7, line=dict(width=1, color='White')))
     fig_res.update_layout(
         template="plotly_white",
@@ -290,7 +316,7 @@ with tab3:
 
     st.plotly_chart(fig_res, use_container_width=True)
     
-    # 4. Error Metrics Summary
+    #  Error Metrics Summary
     res_c1, res_c2 = st.columns(2)
     mae = np.mean(np.abs(err_df['Actual'] - err_df['Predicted']))
     rmse = np.sqrt(np.mean((err_df['Actual'] - err_df['Predicted'])**2))
