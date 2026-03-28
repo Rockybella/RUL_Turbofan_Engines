@@ -4,6 +4,6 @@ pandas
 numpy<2
 plotly
 statsmodels
-tensorflow==2.15.0
-tf-keras==2.15.0
+tensorflow-cpu
+tf-keras
 joblib
