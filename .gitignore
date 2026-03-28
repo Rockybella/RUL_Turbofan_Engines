@@ -27,7 +27,7 @@ training_log.csv
 # --- 4. Models & Binaries ---
 # Ignore all model formats by default
 *.pkl
-*.h5
+
 *.keras
 *.bin
 
