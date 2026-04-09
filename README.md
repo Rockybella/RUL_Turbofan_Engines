@@ -19,7 +19,7 @@
 **AeroNet RUL** is a high-fidelity deep learning framework developed for **Prognostics and Health Management (PHM)**. By leveraging the **NASA C-MAPSS** (Commercial Modular Aero-Propulsion System Simulation) dataset, this project demonstrates a scalable approach to forecasting the **Remaining Useful Life (RUL)** of aerospace assets to ensure fleet readiness and mission-critical reliability [1].
 
 ## 🧠 Project Architecture
-The proposed system utilizes a proprietary hybrid architecture designed for high-dimensional sensor telemetry:
+The proposed system utilizes a custom designed hybrid architecture for high-dimensional sensor telemetry:
 
 *   **Feature Extraction:** A Convolutional-inspired (CAE) backbone utilizing **Conv1D layers** with custom padding to maintain temporal resolution without dimensionality loss.
 *   **Sequential Intelligence:** A stacked **Bidirectional LSTM (Bi-LSTM)** framework to capture long-range temporal dependencies across engine degradation cycles.
