@@ -38,7 +38,7 @@ SENSOR_MAP = {
 
 st.set_page_config(page_title="AeroNet RUL", page_icon="✈️", layout="wide")
 
-# CSS for the "Glassmorphism" look in your image
+# CSS for the "Glassmorphism" 
 st.markdown("""
 <style>
     .main { background-color: #F8FAFC; }
@@ -73,7 +73,7 @@ expected_features = scaler.feature_names_in_.tolist()
 WINDOW_SIZE = 30
 
 # ==========================================
-# SIDEBAR (MATCHING YOUR FORMAT)
+# SIDEBAR 
 # ==========================================
 with st.sidebar:
     st.title("System Control")
@@ -129,7 +129,7 @@ with tab1:
         st.subheader("Critical Sensor Fusion (Smoothed)")
         
         # 1. Prepare smoothed data for a cleaner trend
-        # We rename first to use real names in the legend immediately
+      
         plot_df_renamed = unit_scaled.rename(columns=SENSOR_MAP)
         
         # 2. Select Expert-Recommended Sensors for FD001 Health
@@ -142,7 +142,7 @@ with tab1:
             SENSOR_MAP['s15']  # BPR (Bypass Ratio)
         ]
         
-        # Filter to ensure we only plot what's actually in your processed data
+        # Filter to ensure we only plot what's actually in the processed data
         available_plot_cols = [c for c in expert_sensors if c in plot_df_renamed.columns]
         
         # Apply a 5-cycle moving average to remove "jitter" from the lines
@@ -170,7 +170,7 @@ with tab1:
 
     with c_right:
         st.subheader("RUL Probability")
-        # Gaussian curve centered at our real prediction
+        # Gaussian curve centered at real prediction
         # We use float(pred_rul) to ensure it works with the math below
         mu = float(pred_rul)
         sigma = 8.5 # Estimated model uncertainty
@@ -242,7 +242,7 @@ with tab2:
     arch_col1, arch_col2 = st.columns([2, 1])
     
     with arch_col1:
-        # Table of layers matching your Python model build
+        # Table of layers matching Python model build
         arch_data = {
             "Layer Type": ["Input", "Conv1D (Encoder)", "Conv1D (Encoder)", "Bidirectional LSTM", "Bidirectional LSTM", "Attention Mechanism", "Global Average Pooling", "Dense (Fully Connected)", "Dropout (0.2)", "Output"],
             "Filters/Units": ["(30, 14)", "64 (Kernel 3)", "32 (Kernel 3)", "128 (64x2)", "64 (32x2)", "Softmax Weighted", "64", "64", "N/A", "1"],
